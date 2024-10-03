@@ -18,10 +18,9 @@ Tested on emulator in Android Studio</br>
 --Medium Phone API 35, Android 15</br>
 
 ### TODOs
-Auth:
+Auth:</br>
+-Update to use AppAuth instead of doing it the hard way</br>
 -Clean up oauth2 logic.  There is probably too much work done in the view.</br>
--Finish oauth2 by adding refresh token logic.</br>
--Look into a standard android oauth2 library</br>
 -Add some sort of logout button</br>
 -Maybe make a view just for auth</br>
 -Security issues.  Client secret stored in plaintext in code. Token printed throughout.</br>
