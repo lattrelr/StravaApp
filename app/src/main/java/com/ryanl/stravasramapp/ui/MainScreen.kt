@@ -39,29 +39,11 @@ fun MainScreen(apiCode: String?, apiScope: String?, mainViewModel: MainViewModel
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        // TODO Probably not the best place for this logic
-        val currentTime = System.currentTimeMillis()/1000
-        val expiresAt = StoredAppPrefs.getExpires()
-        val myToken = StoredAppPrefs.getToken()
-        var fetchNewToken = true
-
-        if (myToken != "" && expiresAt != -1L) {
-            fetchNewToken = if (currentTime >= expiresAt) true else false
+        // TODO could change to await if we want to keep the corouine in the viewmodel
+        mainViewModel.authorizeUser(apiCode, apiScope) {
+            startAuth(context)
         }
-
-        // TODO fetch new token should be done in the view model maybe, and use the
-        // TODO refreshToken instead of logging in again to get a code.
-        if (fetchNewToken) {
-            if (apiCode == null || apiScope == null) {
-                startAuth(context)
-            } else {
-                mainViewModel.getToken(apiCode, apiScope)
-            }
-        } else {
-            Log.d("MainScreen",
-                "Have a token: ${StoredAppPrefs.getToken()} ${StoredAppPrefs.getExpires()} ${System.currentTimeMillis()/1000}")
-        }
-
+        // TODO this is called after startAuth and fails
         mainViewModel.fetchRoutes()
     }
 
